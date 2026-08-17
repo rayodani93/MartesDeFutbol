@@ -148,10 +148,23 @@ const handleRegister = async (
         );
     }
     catch (error)
+{
+    console.error(
+        "Error al registrar el usuario:",
+        error,
+    );
+
+    if (error instanceof Error)
     {
-        console.error("Error al registrar el usuario:", error);
-        setError("No se ha podido crear la cuenta.");
+        setError(error.message);
     }
+    else
+    {
+        setError(
+            "No se ha podido crear la cuenta.",
+        );
+    }
+}
 
 };
     return (
