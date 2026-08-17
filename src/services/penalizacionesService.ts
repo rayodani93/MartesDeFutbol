@@ -56,25 +56,13 @@ export async function sancionarUnaSemana(
     perfilId: string,
 ): Promise<void>
 {
-    const ahora = new Date();
-
-    const penalizadoHasta =
-        new Date(
-            ahora.getTime() +
-            7 * 24 * 60 * 60 * 1000,
-        );
-
     const { error } =
-        await supabase
-            .from("perfiles")
-            .update({
-                penalizado_hasta:
-                    penalizadoHasta.toISOString(),
-            })
-            .eq(
-                "id",
-                perfilId,
-            );
+        await supabase.rpc(
+            "admin_sancionar_proximo_partido",
+            {
+                p_perfil_id: perfilId,
+            },
+        );
 
     if (error)
     {
@@ -87,15 +75,12 @@ export async function quitarSancion(
 ): Promise<void>
 {
     const { error } =
-        await supabase
-            .from("perfiles")
-            .update({
-                penalizado_hasta: null,
-            })
-            .eq(
-                "id",
-                perfilId,
-            );
+        await supabase.rpc(
+            "admin_quitar_sancion",
+            {
+                p_perfil_id: perfilId,
+            },
+        );
 
     if (error)
     {
