@@ -1,0 +1,395 @@
+.admin-page
+{
+    min-height: 100vh;
+
+    padding: 24px 16px 48px;
+
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(255, 193, 7, 0.08),
+            transparent 30%
+        ),
+        #101216;
+
+    color: white;
+}
+
+.admin-container
+{
+    width: 100%;
+    max-width: 1200px;
+
+    margin: 0 auto;
+}
+
+.admin-container > h1
+{
+    margin: 0 0 8px;
+
+    font-size: 32px;
+    line-height: 1.2;
+}
+
+.admin-container > p
+{
+    margin: 0 0 26px;
+
+    color: #aeb3bd;
+
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+/* ========================= */
+/* Mensajes                  */
+/* ========================= */
+
+.form-error
+{
+    margin-bottom: 20px;
+
+    padding: 14px 16px;
+
+    border: 1px solid rgba(239, 83, 80, 0.55);
+    border-radius: 14px;
+
+    background: rgba(239, 83, 80, 0.12);
+
+    color: #ff9d9b;
+
+    font-weight: 700;
+}
+
+.admin-success
+{
+    margin-bottom: 20px;
+
+    padding: 14px 16px;
+
+    border: 1px solid rgba(84, 200, 120, 0.55);
+    border-radius: 14px;
+
+    background: rgba(84, 200, 120, 0.12);
+
+    color: #91ebb0;
+
+    font-weight: 700;
+}
+
+/* ========================= */
+/* Grid                      */
+/* ========================= */
+
+.penalizaciones-lista
+{
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 18px;
+}
+
+/* ========================= */
+/* Tarjeta                   */
+/* ========================= */
+
+.penalizacion-card
+{
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 22px;
+
+    border: 1px solid #30343d;
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.018),
+            rgba(24, 26, 31, 0.96)
+        );
+
+    box-shadow:
+        0 14px 34px rgba(0, 0, 0, 0.22);
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.penalizacion-card:hover
+{
+    transform: translateY(-2px);
+
+    border-color: rgba(84, 200, 120, 0.35);
+
+    box-shadow:
+        0 20px 42px rgba(0, 0, 0, 0.28);
+}
+
+.penalizacion-card-activa
+{
+    border-color: rgba(239, 83, 80, 0.55);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(239, 83, 80, 0.10),
+            rgba(24, 26, 31, 0.96) 48%
+        );
+}
+
+/* ========================= */
+/* Datos del jugador         */
+/* ========================= */
+
+.penalizacion-info
+{
+    display: flex;
+    flex-direction: column;
+
+    gap: 16px;
+
+    flex: 1;
+}
+
+.penalizacion-info > div:first-child
+{
+    padding-bottom: 14px;
+
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.07);
+}
+
+.penalizacion-info h2
+{
+    margin: 0 0 6px;
+
+    color: #ffffff;
+
+    font-size: 23px;
+    line-height: 1.15;
+}
+
+.penalizacion-info > div:first-child p
+{
+    margin: 0;
+
+    color: #9fa5af;
+
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+.penalizacion-datos
+{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 16px;
+}
+
+.penalizacion-datos span
+{
+    color: #9fa5af;
+
+    font-size: 13px;
+}
+
+.penalizacion-datos strong
+{
+    color: #f3f4f6;
+
+    font-size: 14px;
+    font-weight: 800;
+
+    text-align: right;
+}
+
+/* ========================= */
+/* Contador retiradas        */
+/* ========================= */
+
+.penalizacion-datos:nth-of-type(2) strong
+{
+    min-width: 36px;
+    height: 36px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background:
+        rgba(255, 193, 7, 0.12);
+
+    color: #ffd76b;
+
+    font-size: 17px;
+}
+
+/* ========================= */
+/* Acciones                  */
+/* ========================= */
+
+.penalizacion-acciones
+{
+    margin-top: 22px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+.penalizacion-acciones button
+{
+    width: 100%;
+    min-height: 46px;
+
+    padding: 0 16px;
+
+    border: 1px solid transparent;
+    border-radius: 13px;
+
+    font-size: 14px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+/* Sancionar */
+
+.penalizacion-acciones button:first-child
+{
+    border-color:
+        rgba(239, 83, 80, 0.42);
+
+    background:
+        rgba(239, 83, 80, 0.14);
+
+    color: #ff8f8d;
+}
+
+.penalizacion-acciones button:first-child:hover
+{
+    transform: translateY(-1px);
+
+    border-color:
+        rgba(239, 83, 80, 0.75);
+
+    background:
+        rgba(239, 83, 80, 0.22);
+}
+
+/* Quitar sanción */
+
+.penalizacion-acciones button:nth-child(2)
+{
+    border-color:
+        rgba(84, 200, 120, 0.42);
+
+    background:
+        rgba(84, 200, 120, 0.14);
+
+    color: #86e9a5;
+}
+
+.penalizacion-acciones button:nth-child(2):hover
+{
+    transform: translateY(-1px);
+
+    border-color:
+        rgba(84, 200, 120, 0.75);
+
+    background:
+        rgba(84, 200, 120, 0.22);
+}
+
+.penalizacion-acciones button:disabled
+{
+    opacity: 0.5;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+/* ========================= */
+/* Tablet                    */
+/* ========================= */
+
+@media (max-width: 1000px)
+{
+    .penalizaciones-lista
+    {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* ========================= */
+/* Móvil                     */
+/* ========================= */
+
+@media (max-width: 650px)
+{
+    .admin-page
+    {
+        padding:
+            18px 14px 36px;
+    }
+
+    .admin-container > h1
+    {
+        font-size: 27px;
+    }
+
+    .penalizaciones-lista
+    {
+        grid-template-columns: 1fr;
+
+        gap: 14px;
+    }
+
+    .penalizacion-card
+    {
+        padding: 18px;
+
+        border-radius: 18px;
+    }
+
+    .penalizacion-info h2
+    {
+        font-size: 21px;
+    }
+
+    .penalizacion-datos
+    {
+        align-items: flex-start;
+    }
+
+    .penalizacion-datos strong
+    {
+        max-width: 55%;
+    }
+
+    .penalizacion-acciones button
+    {
+        min-height: 48px;
+    }
+}

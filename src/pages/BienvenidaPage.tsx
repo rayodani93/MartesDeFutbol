@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
 import NewTeamCampeon from "../assets/NewTeamCampeon.jpeg";
+import PapaJamon from "../assets/PapaJamon.jpeg";
+import Chato from "../assets/Chato.jpeg";
 
 import "./BienvenidaPage.css";
 
@@ -53,6 +55,32 @@ function BienvenidaPage()
         imagen = NewTeamCampeon;
     }
 
+    if (perfil?.equipo_id === 2)
+    {
+        titulo = "Bienvenido, semifinalista!!";
+
+        mensaje1 =
+            "¿Quieres jugar una final y no pechofiar cuando queman las papas?";
+
+        mensaje2 =
+            "Así empezó tu patrocinador, luchad por ello, haced que se sienta orgulloso!!!!!";
+
+        imagen = PapaJamon;
+    }
+
+    if (perfil?.equipo_id === 4)
+    {
+        titulo = "Bienvenido, futbolista";
+
+        mensaje1 =
+            "Entrena duro.";
+
+        mensaje2 =
+            "O te convertirás en un futbolista como él.";
+
+        imagen = Chato;
+    }
+
     return (
         <main className="bienvenida-page">
             <section className="bienvenida-card">
@@ -60,7 +88,7 @@ function BienvenidaPage()
                 {imagen && (
                     <img
                         src={imagen}
-                        alt="New Team Campeón"
+                        alt="Bienvenida"
                         className="bienvenida-image"
                     />
                 )}
