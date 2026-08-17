@@ -13,7 +13,7 @@ import HomePage from "../pages/HomePage";
 import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
 import StatsPage from "../pages/StatsPage";
-import ConfirmadoPage from "../pages/ConfirmadoPage";
+import RegistroCompletadoPage from "../pages/RegistroCompletadoPage";
 
 function AppRouter()
 {
@@ -94,8 +94,8 @@ function AppRouter()
             />
 
             <Route
-               path="/confirmado"
-               element={<ConfirmadoPage />}
+               path="/registro-completado"
+               element={<RegistroCompletadoPage />}
             />
 
             <Route

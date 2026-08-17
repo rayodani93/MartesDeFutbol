@@ -25,10 +25,8 @@ export async function registrarUsuario(
         await supabase.auth.signUp({
             email: datos.email,
             password: datos.password,
-            options: {
-                emailRedirectTo:
-                    `${window.location.origin}/confirmado`,
 
+            options: {
                 data: {
                     nombre: datos.nombre,
                     apellidos: datos.apellidos,
@@ -42,6 +40,22 @@ export async function registrarUsuario(
     if (error)
     {
         throw error;
+    }
+
+    /*
+     * Como ya no exigimos confirmación por correo,
+     * Supabase puede dejar al usuario autenticado
+     * automáticamente tras el registro.
+     *
+     * Cerramos esa sesión para que primero vea
+     * RegistroCompletadoPage y después haga login.
+     */
+    const { error: signOutError } =
+        await supabase.auth.signOut();
+
+    if (signOutError)
+    {
+        throw signOutError;
     }
 
     return data;

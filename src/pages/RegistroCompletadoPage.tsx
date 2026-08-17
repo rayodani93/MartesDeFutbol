@@ -4,7 +4,7 @@ import BolloCunao from "../assets/BolloCuñao.png";
 
 import "./LoginPage.css";
 
-function ConfirmadoPage()
+function RegistroCompletadoPage()
 {
     return (
         <main className="auth-page">
@@ -16,7 +16,7 @@ function ConfirmadoPage()
                 </div>
 
                 <h1>
-                    Cuenta confirmada
+                    Registro completado
                 </h1>
 
                 <p className="auth-subtitle">
@@ -71,4 +71,4 @@ function ConfirmadoPage()
     );
 }
 
-export default ConfirmadoPage;
+export default RegistroCompletadoPage;
