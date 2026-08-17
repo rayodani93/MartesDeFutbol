@@ -1,5 +1,6 @@
 import
 {
+    Bell,
     ChartColumn,
     House,
     LogOut,
@@ -16,6 +17,11 @@ import "./HomeHeader.css";
 
 import { useAuth } from "../contexts/AuthContext";
 
+import
+{
+    activarNotificaciones,
+} from "../services/notificacionesService";
+
 function HomeHeader()
 {
     const
@@ -25,6 +31,36 @@ function HomeHeader()
     } = useAuth();
 
     const navigate = useNavigate();
+
+    const handleActivarNotificaciones = async () =>
+    {
+        try
+        {
+            await activarNotificaciones();
+
+            alert(
+                "🔔 Notificaciones activadas correctamente.",
+            );
+        }
+        catch (error)
+        {
+            console.error(
+                "Error al activar notificaciones:",
+                error,
+            );
+
+            if (error instanceof Error)
+            {
+                alert(error.message);
+            }
+            else
+            {
+                alert(
+                    "No se han podido activar las notificaciones.",
+                );
+            }
+        }
+    };
 
     const handleCerrarSesion = async () =>
     {
@@ -104,6 +140,20 @@ function HomeHeader()
                         Stats
                     </span>
                 </NavLink>
+
+                <button
+                    type="button"
+                    className="nav-item"
+                    onClick={handleActivarNotificaciones}
+                    aria-label="Activar notificaciones"
+                    title="Activar notificaciones"
+                >
+                    <Bell aria-hidden="true" />
+
+                    <span>
+                        Avisos
+                    </span>
+                </button>
 
                 {
                     perfil?.rol === "admin" &&
