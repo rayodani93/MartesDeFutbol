@@ -14,6 +14,7 @@ import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
 import StatsPage from "../pages/StatsPage";
 import RegistroCompletadoPage from "../pages/RegistroCompletadoPage";
+import BienvenidaPage from "../pages/BienvenidaPage";
 
 function AppRouter()
 {
@@ -96,6 +97,11 @@ function AppRouter()
             <Route
                path="/registro-completado"
                element={<RegistroCompletadoPage />}
+            />
+
+            <Route
+               path="/bienvenida"
+               element={<BienvenidaPage />}
             />
 
             <Route

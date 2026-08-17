@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
 import { iniciarSesion } from "../services/authService";
+
 import "./LoginPage.css";
 
 function LoginPage()
@@ -17,19 +19,26 @@ function LoginPage()
     ) =>
     {
         event.preventDefault();
+
         setError("");
 
         const cleanEmail = email.trim();
 
         if (cleanEmail === "")
         {
-            setError("Introduce tu correo electrónico.");
+            setError(
+                "Introduce tu correo electrónico.",
+            );
+
             return;
         }
 
         if (password === "")
         {
-            setError("Introduce tu contraseña.");
+            setError(
+                "Introduce tu contraseña.",
+            );
+
             return;
         }
 
@@ -42,12 +51,23 @@ function LoginPage()
                 password,
             });
 
-            navigate("/");
+            navigate(
+                "/bienvenida",
+                {
+                    replace: true,
+                },
+            );
         }
         catch (error)
         {
-            console.error("Error al iniciar sesión:", error);
-            setError("El correo o la contraseña no son correctos.");
+            console.error(
+                "Error al iniciar sesión:",
+                error,
+            );
+
+            setError(
+                "El correo o la contraseña no son correctos.",
+            );
         }
         finally
         {
@@ -57,10 +77,16 @@ function LoginPage()
 
     return (
         <main className="auth-page">
-            <section className="auth-card">
-                <div className="auth-ball">⚽</div>
 
-                <h1>Entrenamiento de los Jueves</h1>
+            <section className="auth-card">
+
+                <div className="auth-ball">
+                    ⚽
+                </div>
+
+                <h1>
+                    Martes de Fútbol
+                </h1>
 
                 <p className="auth-subtitle">
                     Accede para apuntarte a la convocatoria semanal
@@ -82,7 +108,11 @@ function LoginPage()
                         placeholder="Ej. dani@email.com"
                         autoComplete="email"
                         value={email}
-                        onChange={(event) => setEmail(event.target.value)}
+                        onChange={(event) =>
+                            setEmail(
+                                event.target.value,
+                            )
+                        }
                         disabled={loading}
                     />
 
@@ -98,7 +128,9 @@ function LoginPage()
                         autoComplete="current-password"
                         value={password}
                         onChange={(event) =>
-                            setPassword(event.target.value)
+                            setPassword(
+                                event.target.value,
+                            )
                         }
                         disabled={loading}
                     />
@@ -117,14 +149,18 @@ function LoginPage()
                         className="primary-button"
                         disabled={loading}
                     >
-                        {loading
-                            ? "Iniciando sesión..."
-                            : "Iniciar sesión"}
+                        {
+                            loading
+                                ? "Iniciando sesión..."
+                                : "Iniciar sesión"
+                        }
                     </button>
+
                 </form>
 
                 <p className="auth-footer">
                     ¿Todavía no tienes cuenta?{" "}
+
                     <Link
                         to="/register"
                         className="auth-link"
@@ -132,7 +168,9 @@ function LoginPage()
                         Registrarse
                     </Link>
                 </p>
+
             </section>
+
         </main>
     );
 }
