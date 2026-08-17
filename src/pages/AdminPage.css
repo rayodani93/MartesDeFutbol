@@ -1,0 +1,194 @@
+.admin-page {
+    min-height: 100vh;
+    padding: 32px 20px 48px;
+
+    background:
+        radial-gradient(
+            circle at top,
+            rgba(84, 200, 120, 0.10),
+            transparent 35%
+        ),
+        #101216;
+
+    color: white;
+}
+
+.admin-container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.admin-header {
+    margin-bottom: 36px;
+}
+
+.admin-header h1 {
+    margin: 0 0 12px;
+
+    font-size: 34px;
+}
+
+.admin-header p {
+    margin: 0;
+
+    color: #b8bcc5;
+
+    font-size: 17px;
+}
+
+.admin-grid {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(260px, 1fr)
+    );
+    gap: 24px;
+}
+
+.admin-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+
+    width: 100%;
+    margin-top: 28px;
+}
+
+.admin-actions .primary-button,
+.admin-actions .danger-button {
+    width: 100%;
+    min-width: 0;
+    min-height: 70px;
+
+    padding: 16px 20px;
+
+    border: none;
+    border-radius: 16px;
+
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+
+    cursor: pointer;
+
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
+}
+
+.admin-actions .primary-button {
+    background: #54c878;
+
+    color: #101216;
+}
+
+.admin-actions .danger-button {
+    background: #e73546;
+
+    color: white;
+}
+
+.admin-actions .primary-button:hover,
+.admin-actions .danger-button:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+.admin-actions .primary-button:disabled,
+.admin-actions .danger-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+@media (max-width: 760px) {
+    .admin-page {
+        padding: 24px 16px 40px;
+    }
+
+    .admin-header h1 {
+        font-size: 28px;
+    }
+
+    .admin-header p {
+        font-size: 15px;
+    }
+
+    .admin-actions {
+        grid-template-columns: 1fr;
+    }
+}
+.admin-equipos
+{
+    margin-top: 2rem;
+}
+
+.admin-equipo-fila
+{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.admin-equipo-fila > div
+{
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.admin-equipo-fila span
+{
+    font-size: 0.9rem;
+    opacity: 0.75;
+}
+
+.admin-equipo-fila select
+{
+    min-width: 160px;
+    padding: 0.65rem;
+
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 8px;
+
+    background: #1b1e24;
+    color: white;
+}
+
+.admin-jugador-nombre
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.equipo-indicador
+{
+    display: inline-block;
+
+    width: 16px;
+    height: 16px;
+
+    border: 2px solid rgba(255, 255, 255, 0.35);
+    border-radius: 50%;
+}
+
+.equipo-indicador-rojo
+{
+    background: #e73546;
+}
+
+.equipo-indicador-blanco
+{
+    background: #ffffff;
+}
+
+.equipo-indicador-sin-asignar
+{
+    background: transparent;
+}

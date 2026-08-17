@@ -1,0 +1,53 @@
+.admin-card {
+    width: 100%;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+
+    border: 1px solid #292d35;
+    border-radius: 18px;
+
+    background: rgba(24, 26, 31, 0.94);
+
+    color: white;
+    text-align: left;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.admin-card:hover {
+    transform: translateY(-3px);
+
+    border-color: #54c878;
+
+    background: #252830;
+
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
+}
+
+.admin-card-icon {
+    font-size: 42px;
+    line-height: 1;
+}
+
+.admin-card h2 {
+    margin: 0;
+    font-size: 22px;
+}
+
+.admin-card p {
+    margin: 0;
+
+    color: #b8bcc5;
+
+    font-size: 15px;
+    line-height: 1.5;
+}

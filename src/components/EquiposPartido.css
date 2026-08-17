@@ -1,0 +1,396 @@
+.equipos-partido
+{
+    width: 100%;
+
+    margin-top: 32px;
+}
+
+.equipos-partido-header
+{
+    margin-bottom: 20px;
+
+    text-align: center;
+}
+
+.equipos-partido-header h2
+{
+    margin: 0 0 8px;
+
+    font-size: clamp(24px, 4vw, 30px);
+}
+
+.equipos-partido-header p
+{
+    margin: 0;
+
+    color: #b8bcc5;
+
+    font-size: clamp(14px, 2vw, 16px);
+}
+
+.campo-futbol
+{
+    position: relative;
+
+    width: 100%;
+    min-height: 420px;
+
+    overflow: hidden;
+
+    padding: clamp(20px, 4vw, 40px);
+
+    border: 3px solid rgba(255, 255, 255, 0.30);
+    border-radius: 30px;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            #2f9147 0,
+            #2f9147 70px,
+            #2a8541 70px,
+            #2a8541 140px
+        );
+
+    box-sizing: border-box;
+}
+
+/* ========================= */
+/* Línea central             */
+/* ========================= */
+
+.campo-futbol::before
+{
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+    left: 50%;
+
+    width: 3px;
+
+    background: rgba(255, 255, 255, 0.85);
+
+    transform: translateX(-50%);
+
+    pointer-events: none;
+}
+
+/* ========================= */
+/* Círculo central           */
+/* ========================= */
+
+.campo-futbol::after
+{
+    content: "";
+
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: clamp(72px, 12vw, 120px);
+    height: clamp(72px, 12vw, 120px);
+
+    border: 3px solid rgba(255, 255, 255, 0.85);
+    border-radius: 50%;
+
+    transform: translate(-50%, -50%);
+
+    pointer-events: none;
+}
+
+/* ========================= */
+/* Distribución de equipos   */
+/* ========================= */
+
+.equipos-grid
+{
+    position: relative;
+
+    z-index: 2;
+
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: clamp(16px, 5vw, 60px);
+
+    align-items: stretch;
+}
+
+.equipo
+{
+    display: flex;
+
+    flex-direction: column;
+
+    min-width: 0;
+    height: 100%;
+}
+
+.equipo h3
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 12px;
+
+    margin: 0 0 24px;
+
+    color: white;
+
+    font-size: clamp(18px, 3vw, 24px);
+
+    text-align: center;
+}
+
+.circulo
+{
+    width: 20px;
+    height: 20px;
+
+    border-radius: 50%;
+
+    flex-shrink: 0;
+}
+
+.circulo-blanco
+{
+    border: 2px solid #d9d9d9;
+
+    background: white;
+}
+
+.circulo-rojo
+{
+    background: #e53935;
+}
+
+.equipo ul
+{
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+.equipo li
+{
+    display: flex;
+    align-items: center;
+
+    min-width: 0;
+
+    gap: 10px;
+
+    padding: 10px 14px;
+
+    border-radius: 12px;
+
+    background: rgba(0, 0, 0, 0.18);
+
+    color: white;
+
+    font-size: 16px;
+
+    backdrop-filter: blur(2px);
+
+    transition:
+        transform 0.20s ease,
+        background 0.20s ease,
+        box-shadow 0.20s ease;
+}
+
+.equipo li:hover
+{
+    transform: translateY(-2px);
+
+    background: rgba(0, 0, 0, 0.28);
+}
+
+.mi-equipo-jugador
+{
+    border: 2px solid transparent;
+}
+
+.mi-equipo-blanco
+{
+    border-color: white;
+
+    box-shadow:
+        0 0 15px rgba(255, 255, 255, 0.40);
+}
+
+.mi-equipo-rojo
+{
+    border-color: #e53935;
+
+    box-shadow:
+        0 0 15px rgba(229, 57, 53, 0.45);
+}
+
+.equipo-etiqueta-tu
+{
+    margin-left: auto;
+
+    padding: 3px 10px;
+
+    border-radius: 999px;
+
+    background: #ffe66d;
+
+    color: #111;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    flex-shrink: 0;
+}
+
+.equipo-vacio
+{
+    color: white;
+
+    font-size: 15px;
+
+    opacity: 0.9;
+}
+
+/* ========================= */
+/* Responsive móvil          */
+/* ========================= */
+
+@media (max-width: 768px)
+{
+    .equipos-partido
+    {
+        margin-top: 24px;
+    }
+
+    .equipos-partido-header
+    {
+        margin-bottom: 16px;
+    }
+
+    .campo-futbol
+    {
+        min-height: 360px;
+
+        padding: 22px 14px;
+
+        border-width: 2px;
+        border-radius: 22px;
+    }
+
+    .campo-futbol::before
+    {
+        width: 2px;
+    }
+
+    .campo-futbol::after
+    {
+        width: 72px;
+        height: 72px;
+
+        border-width: 2px;
+    }
+
+    .equipos-grid
+    {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        gap: 18px;
+    }
+
+    .equipo h3
+    {
+        gap: 7px;
+
+        margin-bottom: 18px;
+
+        font-size: 17px;
+    }
+
+    .circulo
+    {
+        width: 15px;
+        height: 15px;
+    }
+
+    .equipo ul
+    {
+        gap: 8px;
+    }
+
+    .equipo li
+    {
+        gap: 6px;
+
+        padding: 9px 8px;
+
+        font-size: 13px;
+    }
+
+    .equipo-etiqueta-tu
+    {
+        padding: 2px 7px;
+
+        font-size: 10px;
+    }
+
+    .equipo-vacio
+    {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 390px)
+{
+    .campo-futbol
+    {
+        min-height: 340px;
+
+        padding: 20px 10px;
+    }
+
+    .equipos-grid
+    {
+        gap: 14px;
+    }
+
+    .equipo h3
+    {
+        gap: 5px;
+
+        font-size: 15px;
+    }
+
+    .circulo
+    {
+        width: 13px;
+        height: 13px;
+    }
+
+    .equipo li
+    {
+        padding: 8px 6px;
+
+        font-size: 12px;
+    }
+
+    .equipo-etiqueta-tu
+    {
+        padding: 2px 5px;
+
+        font-size: 9px;
+    }
+}

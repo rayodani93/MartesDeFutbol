@@ -1,0 +1,266 @@
+.convocatoria-card
+{
+    width: 100%;
+    max-width: 1100px;
+
+    margin: 0 auto 24px;
+    padding: 28px;
+
+    position: relative;
+    overflow: hidden;
+
+    border: 1px solid #30343d;
+    border-radius: 24px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(84, 200, 120, 0.16),
+            rgba(24, 26, 31, 0.96) 45%
+        );
+
+    box-shadow: 0 22px 55px rgba(0, 0, 0, 0.30);
+}
+
+.convocatoria-card::after
+{
+    content: "⚽";
+
+    position: absolute;
+
+    right: 24px;
+    bottom: -22px;
+
+    font-size: 112px;
+
+    opacity: 0.07;
+
+    pointer-events: none;
+}
+
+.convocatoria-card h2
+{
+    margin: 0 0 22px;
+
+    font-size: 24px;
+}
+
+.convocatoria-fecha
+{
+    margin: 8px 0;
+
+    color: white;
+
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.5;
+
+    text-transform: capitalize;
+}
+
+.convocatoria-horario
+{
+    margin: 8px 0;
+
+    color: #b8bcc5;
+
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.convocatoria-estado
+{
+    width: fit-content;
+
+    margin: 18px 0 0;
+
+    padding: 8px 12px;
+
+    border-radius: 999px;
+
+    background: rgba(84, 200, 120, 0.14);
+    color: #7ce59d;
+
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.convocatoria-card > .primary-button,
+.convocatoria-card > .danger-button
+{
+    width: fit-content;
+    min-width: 320px;
+
+    margin-top: 20px;
+    margin-bottom: 28px;
+
+    padding: 16px 36px;
+
+    border: none;
+    border-radius: 14px;
+
+    font-size: 18px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+}
+
+.convocatoria-card > .primary-button
+{
+    background: #54c878;
+    color: #101216;
+}
+
+.convocatoria-card > .primary-button:hover:not(:disabled)
+{
+    background: #46b369;
+}
+
+.convocatoria-card > .danger-button
+{
+    background: #e73546;
+    color: white;
+}
+
+.convocatoria-card > .danger-button:hover:not(:disabled)
+{
+    background: #d12638;
+}
+
+.convocatoria-card > .primary-button:disabled,
+.convocatoria-card > .danger-button:disabled
+{
+    opacity: 0.65;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+.inscripcion-confirmada,
+.inscripcion-espera
+{
+    width: fit-content;
+
+    margin: 22px 0 20px;
+
+    padding: 12px 18px;
+
+    border-radius: 14px;
+
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.inscripcion-confirmada
+{
+    border: 1px solid rgba(84, 200, 120, 0.50);
+
+    background: rgba(84, 200, 120, 0.12);
+
+    color: #9af0b5;
+}
+
+.inscripcion-espera
+{
+    border: 1px solid rgba(231, 164, 66, 0.50);
+
+    background: rgba(231, 164, 66, 0.12);
+
+    color: #ffc978;
+}
+
+.convocatoria-card .admin-actions
+{
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 16px;
+
+    width: 100%;
+
+    margin-top: 28px;
+}
+
+.convocatoria-card .admin-actions button
+{
+    width: 100%;
+    min-width: 0;
+    min-height: 70px;
+
+    margin: 0;
+
+    padding: 16px 20px;
+
+    border: none;
+    border-radius: 16px;
+
+    font-size: 18px;
+    font-weight: 700;
+
+    text-align: center;
+
+    cursor: pointer;
+}
+
+.convocatoria-card .admin-actions .primary-button
+{
+    max-width: none;
+
+    background: #54c878;
+    color: #101216;
+}
+
+.convocatoria-card .admin-actions .danger-button
+{
+    max-width: none;
+
+    background: #e73546;
+    color: white;
+}
+
+@media (max-width: 760px)
+{
+    .convocatoria-card
+    {
+        padding: 24px 20px;
+
+        border-radius: 20px;
+    }
+
+    .convocatoria-card h2
+    {
+        font-size: 21px;
+    }
+
+    .convocatoria-fecha
+    {
+        font-size: 20px;
+    }
+
+    .convocatoria-card > .primary-button,
+    .convocatoria-card > .danger-button
+    {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .convocatoria-card .admin-actions
+    {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 420px)
+{
+    .convocatoria-card::after
+    {
+        right: 8px;
+
+        font-size: 90px;
+    }
+}

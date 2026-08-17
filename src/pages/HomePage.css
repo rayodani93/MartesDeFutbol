@@ -1,0 +1,76 @@
+.home-page
+{
+    min-height: 100vh;
+
+    padding: 24px 16px 48px;
+
+    background:
+        radial-gradient(
+            circle at top,
+            rgba(84, 200, 120, 0.12),
+            transparent 32%
+        ),
+        #101216;
+
+    color: white;
+}
+
+.home-page > .form-error,
+.home-page > [role="status"]
+{
+    width: 100%;
+    max-width: 1100px;
+
+    margin: 0 auto 20px;
+}
+
+.home-page > [role="status"]
+{
+    padding: 14px 16px;
+
+    border: 1px solid rgba(84, 200, 120, 0.55);
+    border-radius: 14px;
+
+    background: rgba(84, 200, 120, 0.12);
+
+    color: #9af0b5;
+
+    font-weight: 700;
+}
+
+.home-page > section:not(.listas-convocatoria):not(.convocatoria-card):not(.equipos-partido)
+{
+    width: 100%;
+    max-width: 1100px;
+
+    margin: 0 auto;
+
+    padding: 32px 24px;
+
+    border: 1px solid #30343d;
+    border-radius: 22px;
+
+    background: #181a1f;
+
+    text-align: center;
+}
+
+.home-page > section:not(.listas-convocatoria):not(.convocatoria-card):not(.equipos-partido) h2
+{
+    margin-top: 0;
+}
+
+.home-page > section:not(.listas-convocatoria):not(.convocatoria-card):not(.equipos-partido) p
+{
+    margin-bottom: 0;
+
+    color: #b8bcc5;
+}
+
+@media (max-width: 760px)
+{
+    .home-page
+    {
+        padding: 16px 14px 36px;
+    }
+}
