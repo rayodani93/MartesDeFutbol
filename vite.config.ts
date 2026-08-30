@@ -13,6 +13,12 @@ export default defineConfig({
                 enabled: true,
             },
 
+            workbox: {
+                importScripts: [
+                    "push-sw.js",
+                ],
+            },
+
             manifest: {
                 name: "Martes de Fútbol",
                 short_name: "Martes Fútbol",
