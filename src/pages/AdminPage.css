@@ -192,3 +192,105 @@
 {
     background: transparent;
 }
+.admin-resultado
+{
+    margin-top: 32px;
+    padding: 24px;
+    background: #171a1f;
+    border: 1px solid #303640;
+    border-radius: 20px;
+}
+
+.admin-resultado h2
+{
+    margin: 0 0 8px;
+    font-size: 1.35rem;
+}
+
+.admin-resultado p
+{
+    margin: 0 0 20px;
+    color: #c8cdd5;
+}
+
+.admin-resultado-botones
+{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.admin-resultado-botones button
+{
+    width: 100%;
+    min-height: 54px;
+    padding: 12px 16px;
+
+    border: none;
+    border-radius: 14px;
+
+    font-size: 0.95rem;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        opacity 0.15s ease;
+}
+
+.admin-resultado-botones button:hover:not(:disabled)
+{
+    transform: translateY(-2px);
+}
+
+.admin-resultado-botones button:active:not(:disabled)
+{
+    transform: translateY(0);
+}
+
+.admin-resultado-botones button:disabled
+{
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+/* Equipo blanco */
+.admin-resultado-botones button:nth-child(1)
+{
+    background: #f1f3f5;
+    color: #111318;
+}
+
+/* Equipo rojo */
+.admin-resultado-botones button:nth-child(2)
+{
+    background: #ef3340;
+    color: #ffffff;
+}
+
+/* Empate */
+.admin-resultado-botones button:nth-child(3)
+{
+    background: #343a46;
+    color: #ffffff;
+    border: 1px solid #4a5260;
+}
+
+@media (max-width: 650px)
+{
+    .admin-resultado
+    {
+        padding: 18px;
+    }
+
+    .admin-resultado-botones
+    {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-resultado-botones button
+    {
+        min-height: 52px;
+    }
+}
