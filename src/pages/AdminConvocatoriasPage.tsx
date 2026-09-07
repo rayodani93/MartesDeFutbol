@@ -7,6 +7,7 @@ import ConvocatoriaCard from "../components/ConvocatoriaCard";
 import {
     cancelarConvocatoria,
     cerrarConvocatoria,
+    finalizarConvocatoria,
     obtenerConvocatoriaActual,
     reabrirConvocatoria,
 } from "../services/convocatoriasService";
@@ -234,6 +235,97 @@ function AdminConvocatoriasPage()
         }
     };
 
+    const handleFinalizar = async (
+        resultado: "blanco" | "rojo" | "empate",
+    ) =>
+    {
+        if (!convocatoria)
+        {
+            return;
+        }
+
+        const confirmados =
+            inscripciones.filter(
+                (inscripcion) =>
+                    inscripcion.estado === "confirmado",
+            );
+
+        if (confirmados.length === 0)
+        {
+            setError(
+                "No puedes finalizar el partido porque no hay jugadores confirmados.",
+            );
+
+            return;
+        }
+
+        const jugadoresSinEquipo =
+            confirmados.filter(
+                (inscripcion) =>
+                    inscripcion.equipo_partido !== "blanco" &&
+                    inscripcion.equipo_partido !== "rojo",
+            );
+
+        if (jugadoresSinEquipo.length > 0)
+        {
+            setError(
+                `No puedes finalizar el partido. Hay ${jugadoresSinEquipo.length} jugador(es) sin equipo asignado.`,
+            );
+
+            return;
+        }
+
+        const textoConfirmacion =
+            resultado === "empate"
+                ? "¿Confirmas que el partido terminó en empate?"
+                : resultado === "blanco"
+                    ? "¿Confirmas que ganó el equipo blanco?"
+                    : "¿Confirmas que ganó el equipo rojo?";
+
+        const confirmar =
+            window.confirm(
+                textoConfirmacion,
+            );
+
+        if (!confirmar)
+        {
+            return;
+        }
+
+        try
+        {
+            setProcesando(true);
+            setError("");
+            setMensaje("");
+
+            await finalizarConvocatoria(
+                convocatoria.id,
+                resultado,
+            );
+
+            setMensaje(
+                "Partido finalizado y estadísticas actualizadas correctamente.",
+            );
+
+            await cargarConvocatoria();
+        }
+        catch (error)
+        {
+            console.error(
+                "Error al finalizar el partido:",
+                error,
+            );
+
+            setError(
+                "No se ha podido finalizar el partido.",
+            );
+        }
+        finally
+        {
+            setProcesando(false);
+        }
+    };
+
     const handleCambiarEquipo = async (
         inscripcionId: number,
         equipoPartido: "blanco" | "rojo",
@@ -384,7 +476,9 @@ function AdminConvocatoriasPage()
                                     )}
 
                                     {convocatoria.estado !==
-                                        "cancelada" && (
+                                        "cancelada" &&
+                                        convocatoria.estado !==
+                                        "finalizada" && (
                                         <button
                                             type="button"
                                             className="danger-button"
@@ -433,19 +527,19 @@ function AdminConvocatoriasPage()
                                     >
                                         <div>
                                             <strong className="admin-jugador-nombre">
-                                                  <span
+                                                <span
                                                     className={
                                                         inscripcion.equipo_partido === "rojo"
-                                                        ? "equipo-indicador equipo-indicador-rojo"
-                                                        : inscripcion.equipo_partido === "blanco"
-                                                        ? "equipo-indicador equipo-indicador-blanco"            
-                                                        : "equipo-indicador equipo-indicador-sin-asignar"
+                                                            ? "equipo-indicador equipo-indicador-rojo"
+                                                            : inscripcion.equipo_partido === "blanco"
+                                                                ? "equipo-indicador equipo-indicador-blanco"
+                                                                : "equipo-indicador equipo-indicador-sin-asignar"
                                                     }
                                                     aria-hidden="true"
-                                                   />
+                                                />
 
-                                                  {inscripcion.nickname}
-                                            </strong>                                       
+                                                {inscripcion.nickname}
+                                            </strong>
 
                                             <span>
                                                 {inscripcion.posicion ===
@@ -476,7 +570,11 @@ function AdminConvocatoriasPage()
                                                     );
                                                 }
                                             }}
-                                            disabled={procesando}
+                                            disabled={
+                                                procesando ||
+                                                convocatoria.estado ===
+                                                    "finalizada"
+                                            }
                                         >
                                             <option value="">
                                                 Sin asignar
@@ -493,6 +591,75 @@ function AdminConvocatoriasPage()
                                     </div>
                                 ))}
                         </section>
+
+                        {convocatoria.estado !== "finalizada" &&
+                            convocatoria.estado !== "cancelada" && (
+                            <section className="admin-resultado">
+                                <h2>
+                                    🏆 Resultado del partido
+                                </h2>
+
+                                <p>
+                                    Cuando termine el partido,
+                                    selecciona el resultado para
+                                    actualizar las estadísticas.
+                                </p>
+
+                                <div className="admin-resultado-botones">
+                                    <button
+                                        type="button"
+                                        className="primary-button"
+                                        onClick={() =>
+                                            handleFinalizar(
+                                                "blanco",
+                                            )
+                                        }
+                                        disabled={procesando}
+                                    >
+                                        ⚪ Ganó Blanco
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        className="danger-button"
+                                        onClick={() =>
+                                            handleFinalizar(
+                                                "rojo",
+                                            )
+                                        }
+                                        disabled={procesando}
+                                    >
+                                        🔴 Ganó Rojo
+                                    </button>
+
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            handleFinalizar(
+                                                "empate",
+                                            )
+                                        }
+                                        disabled={procesando}
+                                    >
+                                        🤝 Empate
+                                    </button>
+                                </div>
+                            </section>
+                        )}
+
+                        {convocatoria.estado === "finalizada" && (
+                            <section className="admin-resultado">
+                                <h2>
+                                    ✅ Partido finalizado
+                                </h2>
+
+                                <p>
+                                    El resultado ya ha sido
+                                    registrado y las estadísticas
+                                    han sido actualizadas.
+                                </p>
+                            </section>
+                        )}
                     </>
                 )}
             </div>

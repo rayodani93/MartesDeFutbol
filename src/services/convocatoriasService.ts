@@ -92,3 +92,24 @@ export async function cancelarConvocatoria()
 
     return data;
 }
+
+export async function finalizarConvocatoria(
+    convocatoriaId: number,
+    resultado: "blanco" | "rojo" | "empate",
+): Promise<void>
+{
+    const { error } = await supabase.rpc(
+        "finalizar_convocatoria",
+        {
+            p_convocatoria_id: convocatoriaId,
+            p_resultado: resultado,
+        },
+    );
+
+    if (error)
+    {
+        throw new Error(
+            `Error al finalizar la convocatoria: ${error.message}`,
+        );
+    }
+}
