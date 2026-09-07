@@ -244,12 +244,20 @@ function AdminConvocatoriasPage()
             return;
         }
 
+        /*
+         * Solo contabilizamos a los jugadores
+         * que están confirmados.
+         */
         const confirmados =
             inscripciones.filter(
                 (inscripcion) =>
                     inscripcion.estado === "confirmado",
             );
 
+        /*
+         * Evitamos finalizar accidentalmente
+         * una convocatoria vacía.
+         */
         if (confirmados.length === 0)
         {
             setError(
@@ -259,6 +267,10 @@ function AdminConvocatoriasPage()
             return;
         }
 
+        /*
+         * Todos los confirmados deben pertenecer
+         * al equipo blanco o al equipo rojo.
+         */
         const jugadoresSinEquipo =
             confirmados.filter(
                 (inscripcion) =>
@@ -275,16 +287,25 @@ function AdminConvocatoriasPage()
             return;
         }
 
-        const textoConfirmacion =
+        /*
+         * Mostramos claramente qué resultado
+         * estamos a punto de registrar.
+         */
+        const textoResultado =
             resultado === "empate"
-                ? "¿Confirmas que el partido terminó en empate?"
+                ? "🤝 EMPATE"
                 : resultado === "blanco"
-                    ? "¿Confirmas que ganó el equipo blanco?"
-                    : "¿Confirmas que ganó el equipo rojo?";
+                    ? "⚪ GANA EL EQUIPO BLANCO"
+                    : "🔴 GANA EL EQUIPO ROJO";
 
+        /*
+         * Segunda barrera contra errores.
+         * Hasta que el administrador no pulse
+         * Aceptar, no se modifica nada.
+         */
         const confirmar =
             window.confirm(
-                textoConfirmacion,
+                `¿ESTÁS SEGURO DEL RESULTADO?\n\n${textoResultado}\n\nAl confirmar se actualizarán las estadísticas de todos los jugadores.`,
             );
 
         if (!confirmar)
@@ -384,7 +405,8 @@ function AdminConvocatoriasPage()
             </main>
         );
     }
-        return (
+
+    return (
         <main className="admin-page">
             <div className="admin-container">
                 <div className="admin-header">
