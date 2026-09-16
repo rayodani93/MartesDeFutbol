@@ -348,3 +348,152 @@ export async function eliminarNoticia(
         }
     }
 }
+
+/*
+ * =========================================================
+ * VISITAS A NOTICIAS
+ * =========================================================
+ */
+
+export interface EstadisticasVisitasNoticias
+{
+    visitas_totales: number;
+    visitantes_unicos: number;
+    visitas_hoy: number;
+}
+
+export interface VisitaNoticia
+{
+    id: number;
+    perfil_id: string;
+    nickname: string;
+    visitado_en: string;
+}
+
+
+/*
+ * Registra una nueva visita.
+ *
+ * Cada llamada suma una visita nueva,
+ * aunque el mismo usuario haya entrado antes.
+ */
+export async function registrarVisitaNoticias()
+: Promise<void>
+{
+    const { error } = await supabase.rpc(
+        "registrar_visita_noticias",
+    );
+
+    if (error)
+    {
+        console.error(
+            "Error registrando visita a noticias:",
+            error,
+        );
+
+        throw error;
+    }
+}
+
+
+/*
+ * Obtiene los contadores generales.
+ *
+ * Esta función SQL solamente permite
+ * consultar los datos a administradores.
+ */
+export async function obtenerEstadisticasVisitasNoticias()
+: Promise<EstadisticasVisitasNoticias>
+{
+    const { data, error } = await supabase.rpc(
+        "obtener_estadisticas_visitas_noticias",
+    );
+
+    if (error)
+    {
+        console.error(
+            "Error obteniendo estadísticas de visitas:",
+            error,
+        );
+
+        throw error;
+    }
+
+    const estadisticas =
+        data?.[0];
+
+    if (!estadisticas)
+    {
+        return {
+            visitas_totales: 0,
+            visitantes_unicos: 0,
+            visitas_hoy: 0,
+        };
+    }
+
+    return {
+        visitas_totales:
+            Number(
+                estadisticas.visitas_totales,
+            ) || 0,
+
+        visitantes_unicos:
+            Number(
+                estadisticas.visitantes_unicos,
+            ) || 0,
+
+        visitas_hoy:
+            Number(
+                estadisticas.visitas_hoy,
+            ) || 0,
+    };
+}
+
+
+/*
+ * Obtiene las últimas visitas con
+ * el nickname del usuario.
+ *
+ * Si Chato entra tres veces,
+ * aparecerán las tres visitas.
+ */
+export async function obtenerUltimasVisitasNoticias(
+    limite = 50,
+): Promise<VisitaNoticia[]>
+{
+    const { data, error } = await supabase.rpc(
+        "obtener_ultimas_visitas_noticias",
+        {
+            p_limite: limite,
+        },
+    );
+
+    if (error)
+    {
+        console.error(
+            "Error obteniendo últimas visitas:",
+            error,
+        );
+
+        throw error;
+    }
+
+    return (data ?? []).map(
+        (visita: VisitaNoticia) =>
+        {
+            return {
+                id:
+                    Number(visita.id),
+
+                perfil_id:
+                    visita.perfil_id,
+
+                nickname:
+                    visita.nickname,
+
+                visitado_en:
+                    visita.visitado_en,
+            };
+        },
+    );
+}

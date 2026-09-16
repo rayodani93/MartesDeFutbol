@@ -16,6 +16,7 @@ import {
     eliminarImagenNoticia,
     eliminarNoticia,
     obtenerNoticias,
+    registrarVisitaNoticias,
     subirImagenNoticia,
 } from "../services/noticiasService";
 
@@ -99,10 +100,40 @@ function NoticiasPage()
         }
     }
 
+    /*
+     * =========================================================
+     * CARGAR NOTICIAS Y REGISTRAR VISITA
+     * =========================================================
+     *
+     * Cada vez que el usuario entra en /noticias,
+     * registramos una nueva visita.
+     *
+     * Si falla el registro de la visita,
+     * NO impedimos que pueda seguir leyendo las noticias.
+     */
     useEffect(() =>
-    {
-        cargarNoticias();
-    }, []);
+{
+    console.log(
+        "ENTRANDO EN NOTICIAS",
+    );
+
+    registrarVisitaNoticias()
+        .then(() =>
+        {
+            console.log(
+                "VISITA REGISTRADA CORRECTAMENTE",
+            );
+        })
+        .catch((error) =>
+        {
+            console.error(
+                "ERROR REGISTRANDO VISITA:",
+                error,
+            );
+        });
+
+    cargarNoticias();
+}, []);
 
     useEffect(() =>
     {
