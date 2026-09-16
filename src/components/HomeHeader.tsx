@@ -4,6 +4,7 @@ import
     ChartColumn,
     House,
     LogOut,
+    Newspaper,
     ShieldCheck,
 } from "lucide-react";
 
@@ -86,9 +87,7 @@ function HomeHeader()
 
     return (
         <header className="home-header">
-
             <div className="home-header-identidad">
-
                 <h1>
                     ⚽ Martes de Fútbol
                 </h1>
@@ -96,14 +95,12 @@ function HomeHeader()
                 <p>
                     Hola, {perfil?.nickname ?? "Jugador"} 👋
                 </p>
-
             </div>
 
             <nav
                 className="header-navigation"
                 aria-label="Navegación principal"
             >
-
                 <NavLink
                     to="/"
                     end
@@ -120,6 +117,24 @@ function HomeHeader()
 
                     <span>
                         Inicio
+                    </span>
+                </NavLink>
+
+                <NavLink
+                    to="/noticias"
+                    className={
+                        ({ isActive }) =>
+                            isActive
+                                ? "nav-item nav-item-activo"
+                                : "nav-item"
+                    }
+                    aria-label="Noticias"
+                    title="Noticias"
+                >
+                    <Newspaper aria-hidden="true" />
+
+                    <span>
+                        Noticias
                     </span>
                 </NavLink>
 
@@ -191,9 +206,7 @@ function HomeHeader()
                         Salir
                     </span>
                 </button>
-
             </nav>
-
         </header>
     );
 }

@@ -1,20 +1,38 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import {
+    Navigate,
+    Route,
+    Routes,
+} from "react-router-dom";
 
 import AdminRoute from "../components/AdminRoute";
+
 import MainLayout from "../components/MainLayout";
+
 import ProtectedRoute from "../components/ProtectedRoute";
 
 import AdminConvocatoriasPage from "../pages/AdminConvocatoriasPage";
+
 import AdminEstadisticasPage from "../pages/AdminEstadisticasPage";
+
 import AdminJugadoresPage from "../pages/AdminJugadoresPage";
+
 import AdminPage from "../pages/AdminPage";
+
 import AdminPenalizacionesPage from "../pages/AdminPenalizacionesPage";
-import HomePage from "../pages/HomePage";
-import LoginPage from "../pages/LoginPage";
-import RegisterPage from "../pages/RegisterPage";
-import StatsPage from "../pages/StatsPage";
-import RegistroCompletadoPage from "../pages/RegistroCompletadoPage";
+
 import BienvenidaPage from "../pages/BienvenidaPage";
+
+import HomePage from "../pages/HomePage";
+
+import LoginPage from "../pages/LoginPage";
+
+import NoticiasPage from "../pages/NoticiasPage";
+
+import RegisterPage from "../pages/RegisterPage";
+
+import RegistroCompletadoPage from "../pages/RegistroCompletadoPage";
+
+import StatsPage from "../pages/StatsPage";
 
 function AppRouter()
 {
@@ -31,11 +49,16 @@ function AppRouter()
                     index
                     element={<HomePage />}
                 />
-                
+
+                <Route
+                    path="noticias"
+                    element={<NoticiasPage />}
+                />
+
                 <Route
                     path="stats"
                     element={<StatsPage />}
-                 />
+                />
 
                 <Route
                     path="/admin"
@@ -89,19 +112,18 @@ function AppRouter()
             />
 
             <Route
-            
                 path="/register"
                 element={<RegisterPage />}
             />
 
             <Route
-               path="/registro-completado"
-               element={<RegistroCompletadoPage />}
+                path="/registro-completado"
+                element={<RegistroCompletadoPage />}
             />
 
             <Route
-               path="/bienvenida"
-               element={<BienvenidaPage />}
+                path="/bienvenida"
+                element={<BienvenidaPage />}
             />
 
             <Route

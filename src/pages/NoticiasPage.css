@@ -1,0 +1,430 @@
+.noticias-page {
+    width: 100%;
+    min-height: 100%;
+}
+
+.noticias-container {
+    width: min(100%, 920px);
+    margin: 0 auto;
+}
+
+.noticias-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 28px;
+}
+
+.noticias-header h1 {
+    margin: 0 0 6px;
+    font-size: 2rem;
+}
+
+.noticias-header p {
+    margin: 0;
+    color: #aeb6c2;
+}
+
+
+/* =========================================================
+   BOTÓN NUEVA NOTICIA
+   ========================================================= */
+
+.noticias-nueva-boton {
+    flex-shrink: 0;
+    padding: 11px 18px;
+    border: 0;
+    border-radius: 10px;
+    background: #f0b429;
+    color: #111820;
+    font-weight: 800;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition:
+        transform 0.15s ease,
+        opacity 0.15s ease;
+}
+
+.noticias-nueva-boton:hover {
+    transform: translateY(-1px);
+    opacity: 0.92;
+}
+
+
+/* =========================================================
+   FORMULARIO
+   ========================================================= */
+
+.noticia-formulario-card {
+    margin-bottom: 30px;
+    padding: 24px;
+    border: 1px solid #343d49;
+    border-radius: 16px;
+    background: #171d25;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+}
+
+.noticia-formulario-card h2 {
+    margin: 0 0 22px;
+    font-size: 1.25rem;
+}
+
+.noticia-formulario-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.noticia-formulario-card label {
+    margin-top: 9px;
+    color: #e7ebf0;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.noticia-formulario-card input[type="text"],
+.noticia-formulario-card textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 13px 14px;
+    border: 1px solid #3c4653;
+    border-radius: 10px;
+    outline: none;
+    background: #0f141b;
+    color: #ffffff;
+    font: inherit;
+    transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+}
+
+.noticia-formulario-card textarea {
+    min-height: 160px;
+    line-height: 1.55;
+    resize: vertical;
+}
+
+.noticia-formulario-card input[type="text"]:focus,
+.noticia-formulario-card textarea:focus {
+    border-color: #f0b429;
+    box-shadow: 0 0 0 3px rgba(240, 180, 41, 0.12);
+}
+
+.noticia-formulario-card input[type="file"] {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 11px;
+    border: 1px dashed #46515f;
+    border-radius: 10px;
+    background: #10161d;
+    color: #b9c1cb;
+    cursor: pointer;
+}
+
+.noticia-formulario-card input[type="file"]::file-selector-button {
+    margin-right: 12px;
+    padding: 8px 12px;
+    border: 0;
+    border-radius: 7px;
+    background: #2b3440;
+    color: #ffffff;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   PREVISUALIZACIÓN
+   ========================================================= */
+
+.noticia-preview {
+    margin-top: 14px;
+}
+
+.noticia-preview p {
+    margin: 0 0 9px;
+    color: #aeb6c2;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.noticia-preview img {
+    display: block;
+    width: 100%;
+    max-height: 430px;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+
+/* =========================================================
+   BOTONES DEL FORMULARIO
+   ========================================================= */
+
+.noticia-formulario-acciones {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.noticia-formulario-acciones button {
+    padding: 11px 18px;
+    border-radius: 9px;
+    font-size: 0.9rem;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.noticia-cancelar {
+    border: 1px solid #424c59;
+    background: transparent;
+    color: #d5dae1;
+}
+
+.noticia-publicar {
+    border: 0;
+    background: #f0b429;
+    color: #111820;
+}
+
+.noticia-formulario-acciones button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   LISTADO DE NOTICIAS
+   ========================================================= */
+
+.noticias-listado {
+    display: grid;
+    gap: 24px;
+}
+
+.noticia-card {
+    overflow: hidden;
+    border: 1px solid #303945;
+    border-radius: 17px;
+    background: #171d25;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.16);
+}
+
+.noticia-imagen {
+    display: block;
+    width: 100%;
+    max-height: 480px;
+    object-fit: cover;
+    background: #0d1117;
+}
+
+.noticia-contenido {
+    padding: 22px;
+}
+
+.noticia-contenido h2 {
+    margin: 0;
+    color: #ffffff;
+    font-size: 1.35rem;
+    line-height: 1.3;
+}
+
+.noticia-fecha {
+    margin: 7px 0 17px;
+    color: #8f99a6;
+    font-size: 0.82rem;
+}
+
+.noticia-texto {
+    margin: 0;
+    color: #d1d6dc;
+    line-height: 1.65;
+    white-space: pre-wrap;
+}
+
+
+/* =========================================================
+   SIN NOTICIAS
+   ========================================================= */
+
+.noticias-vacio {
+    padding: 55px 25px;
+    border: 1px dashed #38424e;
+    border-radius: 16px;
+    background: #151b22;
+    text-align: center;
+}
+
+.noticias-vacio-icono {
+    margin-bottom: 12px;
+    font-size: 2.7rem;
+}
+
+.noticias-vacio h2 {
+    margin: 0 0 8px;
+    font-size: 1.25rem;
+}
+
+.noticias-vacio p {
+    margin: 0;
+    color: #919ba7;
+}
+
+.noticias-error {
+    margin-bottom: 20px;
+    padding: 12px 15px;
+    border: 1px solid #7a3535;
+    border-radius: 10px;
+    background: rgba(120, 30, 30, 0.18);
+    color: #ffb6b6;
+}
+
+
+/* =========================================================
+   MÓVIL
+   ========================================================= */
+
+@media (max-width: 700px) {
+    .noticias-header {
+        align-items: stretch;
+        flex-direction: column;
+        margin-bottom: 22px;
+    }
+
+    .noticias-header h1 {
+        font-size: 1.65rem;
+    }
+
+    .noticias-nueva-boton {
+        width: 100%;
+    }
+
+    .noticia-formulario-card {
+        padding: 18px;
+        border-radius: 14px;
+    }
+
+    .noticia-formulario-acciones {
+        flex-direction: column-reverse;
+    }
+
+    .noticia-formulario-acciones button {
+        width: 100%;
+    }
+
+    .noticia-contenido {
+        padding: 18px;
+    }
+
+    .noticia-imagen {
+        max-height: 360px;
+    }
+}
+/* =========================================================
+   ADMINISTRACIÓN DE NOTICIAS
+   ========================================================= */
+
+.noticia-admin-acciones {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid #303945;
+}
+
+.noticia-admin-acciones button,
+.noticia-quitar-imagen {
+    padding: 9px 14px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+        opacity 0.15s ease,
+        transform 0.15s ease;
+}
+
+.noticia-admin-acciones button:hover,
+.noticia-quitar-imagen:hover {
+    transform: translateY(-1px);
+}
+
+.noticia-editar {
+    border: 1px solid #46515f;
+    background: #252d38;
+    color: #ffffff;
+}
+
+.noticia-eliminar {
+    border: 1px solid #783b42;
+    background: rgba(150, 40, 50, 0.18);
+    color: #ff9fa8;
+}
+
+.noticia-admin-acciones button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+
+/* FOTO ACTUAL AL EDITAR */
+
+.noticia-imagen-actual {
+    margin: 5px 0 12px;
+    padding: 14px;
+    border: 1px solid #343e4a;
+    border-radius: 12px;
+    background: #10161d;
+}
+
+.noticia-imagen-actual p {
+    margin: 0 0 10px;
+    color: #aeb6c2;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.noticia-imagen-actual img {
+    display: block;
+    width: 100%;
+    max-height: 350px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.noticia-quitar-imagen {
+    border: 1px solid #783b42;
+    background: rgba(150, 40, 50, 0.18);
+    color: #ff9fa8;
+}
+
+.noticia-foto-eliminada {
+    margin: 5px 0 10px;
+    padding: 11px 13px;
+    border: 1px solid #66552d;
+    border-radius: 9px;
+    background: rgba(160, 120, 20, 0.12);
+    color: #e8cf8a;
+    font-size: 0.85rem;
+}
+
+
+/* MÓVIL */
+
+@media (max-width: 700px) {
+    .noticia-admin-acciones {
+        flex-direction: column;
+    }
+
+    .noticia-admin-acciones button {
+        width: 100%;
+    }
+
+    .noticia-quitar-imagen {
+        width: 100%;
+    }
+}
