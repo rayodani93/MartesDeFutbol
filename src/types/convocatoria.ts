@@ -11,4 +11,4 @@ export interface Convocatoria
         | "cerrada"
         | "finalizada"
         | "cancelada";
-}245
+}

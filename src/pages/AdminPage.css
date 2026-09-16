@@ -486,3 +486,266 @@
         grid-template-columns: 1fr;
     }
 }
+
+.admin-estadisticas-resumen
+{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 22px 0 28px;
+}
+
+.admin-estadisticas-resumen > div
+{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 18px;
+    background: #171a1f;
+    border: 1px solid #303640;
+    border-radius: 16px;
+}
+
+.admin-estadisticas-resumen strong
+{
+    font-size: 1.8rem;
+}
+
+.admin-estadisticas-resumen span
+{
+    color: #aeb5bf;
+    font-size: 0.85rem;
+}
+
+.admin-historial
+{
+    display: grid;
+    gap: 15px;
+}
+
+.admin-partido-card
+{
+    padding: 20px;
+    background: #171a1f;
+    border: 1px solid #303640;
+    border-radius: 18px;
+}
+
+.admin-partido-cabecera
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.admin-partido-cabecera h3
+{
+    margin: 0 0 8px;
+    text-transform: capitalize;
+}
+
+.admin-partido-resultado
+{
+    font-size: 1rem;
+}
+
+.admin-partido-datos
+{
+    color: #aeb5bf;
+    white-space: nowrap;
+}
+
+.admin-ver-participantes
+{
+    width: 100%;
+    margin-top: 18px;
+    padding: 11px;
+    border: 1px solid #3a414c;
+    border-radius: 11px;
+    background: #272c34;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.admin-partido-equipos
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 16px;
+}
+
+.admin-equipo-historico
+{
+    padding: 15px;
+    border-radius: 14px;
+}
+
+.admin-equipo-blanco
+{
+    background: #25282d;
+    border: 1px solid #555b64;
+}
+
+.admin-equipo-rojo
+{
+    background: #2c1c1f;
+    border: 1px solid #673139;
+}
+
+.admin-equipo-historico h4
+{
+    margin: 0 0 4px;
+}
+
+.admin-equipo-contador
+{
+    display: block;
+    margin-bottom: 12px;
+    color: #aeb5bf;
+    font-size: 0.8rem;
+}
+
+.admin-participante
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 0;
+    border-bottom: 1px solid #373c44;
+}
+
+.admin-participante:last-child
+{
+    border-bottom: none;
+}
+
+.admin-participante small
+{
+    color: #aeb5bf;
+}
+
+@media (max-width: 700px)
+{
+    .admin-estadisticas-resumen
+    {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-partido-cabecera
+    {
+        flex-direction: column;
+    }
+
+    .admin-partido-equipos
+    {
+        grid-template-columns: 1fr;
+    }
+}
+
+.admin-partido-botones
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.admin-partido-botones .admin-ver-participantes
+{
+    margin-top: 0;
+}
+
+.admin-corregir-resultado
+{
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #3a414c;
+    border-radius: 11px;
+    background: #272c34;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.admin-corregir-resultado:hover:not(:disabled),
+.admin-ver-participantes:hover
+{
+    background: #343b46;
+}
+
+.admin-editor-resultado
+{
+    margin-top: 14px;
+    padding: 16px;
+    background: #20242b;
+    border: 1px solid #3a414c;
+    border-radius: 14px;
+}
+
+.admin-editor-resultado p
+{
+    margin: 0 0 12px;
+    font-weight: 600;
+}
+
+.admin-opciones-resultado
+{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.admin-opciones-resultado button
+{
+    min-height: 46px;
+    padding: 10px;
+    border: 1px solid #444b56;
+    border-radius: 11px;
+    background: #171a1f;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.admin-opciones-resultado button:hover:not(:disabled)
+{
+    background: #303640;
+}
+
+.admin-opciones-resultado button.resultado-seleccionado
+{
+    border-color: #4fc873;
+    background: #173d23;
+}
+
+.admin-opciones-resultado button:disabled,
+.admin-corregir-resultado:disabled
+{
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.admin-guardando-resultado
+{
+    margin-top: 12px !important;
+    margin-bottom: 0 !important;
+    color: #aeb5bf;
+    font-size: 0.85rem;
+}
+
+@media (max-width: 700px)
+{
+    .admin-partido-botones
+    {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-opciones-resultado
+    {
+        grid-template-columns: 1fr;
+    }
+}
