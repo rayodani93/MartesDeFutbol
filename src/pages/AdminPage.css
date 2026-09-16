@@ -294,3 +294,195 @@
         min-height: 52px;
     }
 }
+.admin-jugadores-resumen
+{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.admin-jugadores-resumen span
+{
+    padding: 8px 12px;
+    background: #20242b;
+    border: 1px solid #343a44;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+.admin-jugadores-buscador
+{
+    margin-bottom: 20px;
+}
+
+.admin-jugadores-buscador input
+{
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid #3a414c;
+    border-radius: 14px;
+    background: #171a1f;
+    color: white;
+    font-size: 1rem;
+}
+
+.admin-jugadores-lista
+{
+    display: grid;
+    gap: 16px;
+}
+
+.admin-jugador-card
+{
+    padding: 20px;
+    background: #171a1f;
+    border: 1px solid #303640;
+    border-radius: 18px;
+}
+
+.admin-jugador-bloqueado
+{
+    opacity: 0.72;
+}
+
+.admin-jugador-inactivo
+{
+    opacity: 0.72;
+}
+
+.admin-jugador-cabecera
+{
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.admin-jugador-cabecera h2
+{
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.admin-jugador-cabecera p
+{
+    margin: 5px 0 0;
+    color: #aeb5bf;
+}
+
+.admin-badge
+{
+    display: inline-block;
+    margin-left: 8px;
+    padding: 3px 7px;
+    border-radius: 8px;
+    background: #2f9147;
+    font-size: 0.65rem;
+    vertical-align: middle;
+}
+
+.admin-estado
+{
+    white-space: nowrap;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.admin-motivo-bloqueo
+{
+    margin: 14px 0 0;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: #272126;
+}
+
+.admin-jugador-campos
+{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.admin-jugador-campos label
+{
+    display: grid;
+    gap: 6px;
+    font-size: 0.85rem;
+    color: #b8bec7;
+}
+
+.admin-jugador-campos select
+{
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #3a414c;
+    border-radius: 10px;
+    background: #20242b;
+    color: white;
+}
+
+.admin-jugador-acciones
+{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-top: 18px;
+}
+
+.admin-jugador-acciones button
+{
+    min-height: 44px;
+    padding: 9px;
+    border: 1px solid #3a414c;
+    border-radius: 10px;
+    background: #272c34;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.admin-jugador-acciones button:hover:not(:disabled)
+{
+    background: #343b46;
+}
+
+.admin-jugador-acciones button:disabled
+{
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.admin-mensaje-ok
+{
+    padding: 12px;
+    border-radius: 12px;
+    background: #173d23;
+}
+
+@media (max-width: 700px)
+{
+    .admin-jugador-cabecera
+    {
+        flex-direction: column;
+    }
+
+    .admin-jugador-campos
+    {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-jugador-acciones
+    {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 430px)
+{
+    .admin-jugador-acciones
+    {
+        grid-template-columns: 1fr;
+    }
+}

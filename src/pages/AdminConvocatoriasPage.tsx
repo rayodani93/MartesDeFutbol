@@ -421,7 +421,7 @@ function AdminConvocatoriasPage()
 
                     <p>
                         La inscripción se abre el Domingo a
-                        las 22:00 y se cierra el Martes a
+                        las 16:00 y se cierra el Martes a
                         las 19:00.
                     </p>
                 </div>
