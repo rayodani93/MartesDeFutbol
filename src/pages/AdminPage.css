@@ -749,3 +749,137 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* =========================================================
+   VISITAS A NOTICIAS
+   ========================================================= */
+
+.admin-visitas-noticias
+{
+    margin-top: 32px;
+    margin-bottom: 36px;
+}
+
+.admin-visitas-noticias > h2
+{
+    margin: 0 0 20px;
+    font-size: 1.45rem;
+}
+
+
+/* =========================================================
+   LISTADO DE ÚLTIMAS VISITAS
+   ========================================================= */
+
+.admin-ultimas-visitas
+{
+    margin-top: 28px;
+    padding: 20px;
+
+    background: #171b21;
+    border: 1px solid #343b46;
+    border-radius: 16px;
+}
+
+.admin-ultimas-visitas h3
+{
+    margin: 0 0 16px;
+    font-size: 1.15rem;
+}
+
+
+/* =========================================================
+   FILA DE VISITA
+   ========================================================= */
+
+.admin-visita-noticia
+{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 13px 4px;
+
+    border-bottom: 1px solid #343b46;
+}
+
+.admin-visita-noticia:last-child
+{
+    border-bottom: none;
+}
+
+.admin-visita-noticia strong
+{
+    font-size: 0.98rem;
+}
+
+.admin-visita-noticia span
+{
+    font-size: 0.9rem;
+    opacity: 0.75;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   MÓVIL
+   ========================================================= */
+
+@media (max-width: 600px)
+{
+    .admin-visitas-noticias
+    {
+        margin-top: 26px;
+    }
+
+    .admin-ultimas-visitas
+    {
+        padding: 16px;
+    }
+
+    .admin-visita-noticia
+    {
+        gap: 12px;
+    }
+
+    .admin-visita-noticia span
+    {
+        font-size: 0.78rem;
+    }
+}
+
+.admin-ver-visitas
+{
+    width: 100%;
+    margin-top: 18px;
+    padding: 12px 16px;
+
+    border: 1px solid #414957;
+    border-radius: 10px;
+
+    background: #272d36;
+    color: white;
+
+    font: inherit;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.1s ease;
+}
+
+.admin-ver-visitas:hover
+{
+    background: #303743;
+    border-color: #596373;
+}
+
+.admin-ver-visitas:active
+{
+    transform: scale(0.99);
+}

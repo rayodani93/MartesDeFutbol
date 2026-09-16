@@ -13,9 +13,19 @@ import {
     finalizarConvocatoria,
 } from "../services/convocatoriasService";
 
+import {
+    obtenerEstadisticasVisitasNoticias,
+    obtenerUltimasVisitasNoticias,
+} from "../services/noticiasService";
+
 import type {
     PartidoHistorico,
 } from "../services/estadisticasService";
+
+import type {
+    EstadisticasVisitasNoticias,
+    VisitaNoticia,
+} from "../services/noticiasService";
 
 type ResultadoPartido =
     | "blanco"
@@ -44,6 +54,31 @@ function AdminEstadisticasPage()
 
     const [mensaje, setMensaje] =
         useState("");
+
+    const [
+        estadisticasNoticias,
+        setEstadisticasNoticias,
+    ] = useState<EstadisticasVisitasNoticias>({
+        visitas_totales: 0,
+        visitantes_unicos: 0,
+        visitas_hoy: 0,
+    });
+
+    const [
+        ultimasVisitasNoticias,
+        setUltimasVisitasNoticias,
+    ] = useState<VisitaNoticia[]>([]);
+
+    const [
+        mostrarTodasVisitas,
+        setMostrarTodasVisitas,
+    ] = useState(false);
+
+    /*
+     * =========================================================
+     * CARGAR HISTÓRICO
+     * =========================================================
+     */
 
     async function cargarHistorial()
     {
@@ -74,10 +109,52 @@ function AdminEstadisticasPage()
         }
     }
 
+    /*
+     * =========================================================
+     * CARGAR VISITAS A NOTICIAS
+     * =========================================================
+     */
+
+    async function cargarVisitasNoticias()
+    {
+        try
+        {
+            const [
+                estadisticas,
+                visitas,
+            ] = await Promise.all([
+                obtenerEstadisticasVisitasNoticias(),
+                obtenerUltimasVisitasNoticias(50),
+            ]);
+
+            setEstadisticasNoticias(
+                estadisticas,
+            );
+
+            setUltimasVisitasNoticias(
+                visitas,
+            );
+        }
+        catch (error)
+        {
+            console.error(
+                "Error cargando visitas de noticias:",
+                error,
+            );
+        }
+    }
+
     useEffect(() =>
     {
         cargarHistorial();
+        cargarVisitasNoticias();
     }, []);
+
+    /*
+     * =========================================================
+     * FORMATEAR FECHAS
+     * =========================================================
+     */
 
     function formatearFecha(
         fecha: string,
@@ -96,6 +173,32 @@ function AdminEstadisticasPage()
             new Date(fecha),
         );
     }
+
+    function formatearFechaVisita(
+        fecha: string,
+    )
+    {
+        return new Intl.DateTimeFormat(
+            "es-ES",
+            {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+                timeZone: "Europe/Madrid",
+            },
+        ).format(
+            new Date(fecha),
+        );
+    }
+
+    /*
+     * =========================================================
+     * RESULTADOS
+     * =========================================================
+     */
 
     function textoResultado(
         resultado:
@@ -174,12 +277,6 @@ function AdminEstadisticasPage()
                 nuevoResultado,
             );
 
-            /*
-             * Volvemos a consultar Supabase.
-             * Así no falseamos nada en React:
-             * mostramos exactamente lo que
-             * haya quedado grabado.
-             */
             const historialActualizado =
                 await obtenerHistorialPartidos();
 
@@ -210,6 +307,12 @@ function AdminEstadisticasPage()
         }
     }
 
+    /*
+     * =========================================================
+     * LOADING
+     * =========================================================
+     */
+
     if (loading)
     {
         return (
@@ -223,9 +326,16 @@ function AdminEstadisticasPage()
         );
     }
 
+    /*
+     * =========================================================
+     * PÁGINA
+     * =========================================================
+     */
+
     return (
         <main className="admin-page">
             <div className="admin-container">
+
                 <div className="admin-header">
                     <h1>
                         📊 Estadísticas
@@ -233,7 +343,8 @@ function AdminEstadisticasPage()
 
                     <p>
                         Consulta el histórico de partidos,
-                        resultados y participantes.
+                        resultados, participantes y visitas
+                        a Noticias.
                     </p>
                 </div>
 
@@ -254,6 +365,12 @@ function AdminEstadisticasPage()
                         {mensaje}
                     </p>
                 )}
+
+                {/*
+                 * =================================================
+                 * RESUMEN DE PARTIDOS
+                 * =================================================
+                 */}
 
                 <div className="admin-estadisticas-resumen">
                     <div>
@@ -304,6 +421,141 @@ function AdminEstadisticasPage()
                         </span>
                     </div>
                 </div>
+
+                {/*
+                 * =================================================
+                 * VISITAS A NOTICIAS
+                 * =================================================
+                 */}
+
+                <section className="admin-visitas-noticias">
+                    <h2>
+                        📰 Visitas a Noticias
+                    </h2>
+
+                    <div className="admin-estadisticas-resumen">
+                        <div>
+                            <strong>
+                                {
+                                    estadisticasNoticias
+                                        .visitas_totales
+                                }
+                            </strong>
+
+                            <span>
+                                Visitas totales
+                            </span>
+                        </div>
+
+                        <div>
+                            <strong>
+                                {
+                                    estadisticasNoticias
+                                        .visitantes_unicos
+                                }
+                            </strong>
+
+                            <span>
+                                Visitantes únicos
+                            </span>
+                        </div>
+
+                        <div>
+                            <strong>
+                                {
+                                    estadisticasNoticias
+                                        .visitas_hoy
+                                }
+                            </strong>
+
+                            <span>
+                                Visitas hoy
+                            </span>
+                        </div>
+                    </div>
+
+                    <div className="admin-ultimas-visitas">
+                        <h3>
+                            👀 Últimas visitas
+                        </h3>
+
+                        {
+                            ultimasVisitasNoticias.length === 0
+                                ? (
+                                    <p>
+                                        Todavía no hay visitas
+                                        registradas.
+                                    </p>
+                                )
+                                : (
+                                    <>
+                                        {
+                                            ultimasVisitasNoticias
+                                                .slice(
+                                                    0,
+                                                    mostrarTodasVisitas
+                                                        ? ultimasVisitasNoticias.length
+                                                        : 10,
+                                                )
+                                                .map(
+                                                    (visita) => (
+                                                        <div
+                                                            key={visita.id}
+                                                            className="admin-visita-noticia"
+                                                        >
+                                                            <strong>
+                                                                {
+                                                                    visita.nickname
+                                                                }
+                                                            </strong>
+
+                                                            <span>
+                                                                {
+                                                                    formatearFechaVisita(
+                                                                        visita
+                                                                            .visitado_en,
+                                                                    )
+                                                                }
+                                                            </span>
+                                                        </div>
+                                                    ),
+                                                )
+                                        }
+
+                                        {
+                                            ultimasVisitasNoticias.length >
+                                                10 && (
+                                                <button
+                                                    type="button"
+                                                    className="admin-ver-visitas"
+                                                    onClick={() =>
+                                                        setMostrarTodasVisitas(
+                                                            (
+                                                                valorActual,
+                                                            ) =>
+                                                                !valorActual,
+                                                        )
+                                                    }
+                                                >
+                                                    {
+                                                        mostrarTodasVisitas
+                                                            ? "Mostrar solo las últimas 10"
+                                                            : `Ver todas las visitas (${ultimasVisitasNoticias.length})`
+                                                    }
+                                                </button>
+                                            )
+                                        }
+                                    </>
+                                )
+                        }
+                    </div>
+                </section>
+
+                {/*
+                 * =================================================
+                 * HISTORIAL DE PARTIDOS
+                 * =================================================
+                 */}
 
                 <section className="admin-historial">
                     <h2>
@@ -358,16 +610,20 @@ function AdminEstadisticasPage()
                                     <div className="admin-partido-cabecera">
                                         <div>
                                             <h3>
-                                                {formatearFecha(
-                                                    partido
-                                                        .fecha_inicio,
-                                                )}
+                                                {
+                                                    formatearFecha(
+                                                        partido
+                                                            .fecha_inicio,
+                                                    )
+                                                }
                                             </h3>
 
                                             <strong className="admin-partido-resultado">
-                                                {textoResultado(
-                                                    partido.resultado,
-                                                )}
+                                                {
+                                                    textoResultado(
+                                                        partido.resultado,
+                                                    )
+                                                }
                                             </strong>
                                         </div>
 
@@ -394,9 +650,11 @@ function AdminEstadisticasPage()
                                                 )
                                             }
                                         >
-                                            {abierto
-                                                ? "Ocultar participantes"
-                                                : "Ver participantes"}
+                                            {
+                                                abierto
+                                                    ? "Ocultar participantes"
+                                                    : "Ver participantes"
+                                            }
                                         </button>
 
                                         <button
@@ -502,34 +760,38 @@ function AdminEstadisticasPage()
                                                     jugadores
                                                 </span>
 
-                                                {blancos.map(
-                                                    (
-                                                        participante,
-                                                    ) => (
-                                                        <div
-                                                            key={
-                                                                participante
-                                                                    .inscripcion_id
-                                                            }
-                                                            className="admin-participante"
-                                                        >
-                                                            <span>
-                                                                {
+                                                {
+                                                    blancos.map(
+                                                        (
+                                                            participante,
+                                                        ) => (
+                                                            <div
+                                                                key={
                                                                     participante
-                                                                        .nickname
+                                                                        .inscripcion_id
                                                                 }
-                                                            </span>
+                                                                className="admin-participante"
+                                                            >
+                                                                <span>
+                                                                    {
+                                                                        participante
+                                                                            .nickname
+                                                                    }
+                                                                </span>
 
-                                                            <small>
-                                                                {participante
-                                                                    .posicion ===
-                                                                "portero"
-                                                                    ? "🧤 Portero"
-                                                                    : "⚽ Jugador"}
-                                                            </small>
-                                                        </div>
-                                                    ),
-                                                )}
+                                                                <small>
+                                                                    {
+                                                                        participante
+                                                                            .posicion ===
+                                                                        "portero"
+                                                                            ? "🧤 Portero"
+                                                                            : "⚽ Jugador"
+                                                                    }
+                                                                </small>
+                                                            </div>
+                                                        ),
+                                                    )
+                                                }
                                             </div>
 
                                             <div className="admin-equipo-historico admin-equipo-rojo">
@@ -544,34 +806,38 @@ function AdminEstadisticasPage()
                                                     jugadores
                                                 </span>
 
-                                                {rojos.map(
-                                                    (
-                                                        participante,
-                                                    ) => (
-                                                        <div
-                                                            key={
-                                                                participante
-                                                                    .inscripcion_id
-                                                            }
-                                                            className="admin-participante"
-                                                        >
-                                                            <span>
-                                                                {
+                                                {
+                                                    rojos.map(
+                                                        (
+                                                            participante,
+                                                        ) => (
+                                                            <div
+                                                                key={
                                                                     participante
-                                                                        .nickname
+                                                                        .inscripcion_id
                                                                 }
-                                                            </span>
+                                                                className="admin-participante"
+                                                            >
+                                                                <span>
+                                                                    {
+                                                                        participante
+                                                                            .nickname
+                                                                    }
+                                                                </span>
 
-                                                            <small>
-                                                                {participante
-                                                                    .posicion ===
-                                                                "portero"
-                                                                    ? "🧤 Portero"
-                                                                    : "⚽ Jugador"}
-                                                            </small>
-                                                        </div>
-                                                    ),
-                                                )}
+                                                                <small>
+                                                                    {
+                                                                        participante
+                                                                            .posicion ===
+                                                                        "portero"
+                                                                            ? "🧤 Portero"
+                                                                            : "⚽ Jugador"
+                                                                    }
+                                                                </small>
+                                                            </div>
+                                                        ),
+                                                    )
+                                                }
                                             </div>
                                         </div>
                                     )}
