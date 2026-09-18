@@ -497,3 +497,63 @@ export async function obtenerUltimasVisitasNoticias(
         },
     );
 }
+
+/*
+ * =========================================================
+ * OBTENER ÚLTIMA NOTICIA NO LEÍDA
+ * =========================================================
+ */
+
+export async function obtenerUltimaNoticiaNoLeida()
+: Promise<Noticia | null>
+{
+    const { data, error } = await supabase.rpc(
+        "obtener_ultima_noticia_no_leida",
+    );
+
+    if (error)
+    {
+        console.error(
+            "Error obteniendo última noticia no leída:",
+            error,
+        );
+
+        throw error;
+    }
+
+    if (!data || data.length === 0)
+    {
+        return null;
+    }
+
+    return data[0];
+}
+
+
+/*
+ * =========================================================
+ * MARCAR NOTICIA COMO LEÍDA
+ * =========================================================
+ */
+
+export async function marcarNoticiaLeida(
+    noticiaId: number,
+): Promise<void>
+{
+    const { error } = await supabase.rpc(
+        "marcar_noticia_leida",
+        {
+            p_noticia_id: noticiaId,
+        },
+    );
+
+    if (error)
+    {
+        console.error(
+            "Error marcando noticia como leída:",
+            error,
+        );
+
+        throw error;
+    }
+}

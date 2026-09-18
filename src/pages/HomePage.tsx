@@ -1,4 +1,11 @@
-import { useEffect, useState } from "react";
+import {
+    useEffect,
+    useState,
+} from "react";
+
+import {
+    useNavigate,
+} from "react-router-dom";
 
 import "./HomePage.css";
 
@@ -6,32 +13,44 @@ import ConvocatoriaCard from "../components/ConvocatoriaCard";
 import EquiposPartido from "../components/EquiposPartido";
 import ListaInscripciones from "../components/ListaInscripciones";
 
-import { useAuth } from "../contexts/AuthContext";
+import {
+    useAuth,
+} from "../contexts/AuthContext";
 
-import
-{
+import {
     obtenerConvocatoriaActual,
 } from "../services/convocatoriasService";
 
-import
-{
+import {
     apuntarse,
     obtenerInscripciones,
     obtenerMiInscripcion,
     retirarse,
 } from "../services/inscripcionesService";
 
-import type
-{
+import {
+    obtenerUltimaNoticiaNoLeida,
+} from "../services/noticiasService";
+
+import type {
     InscripcionVisible,
     MiInscripcion,
 } from "../services/inscripcionesService";
 
-import type { Convocatoria } from "../types/convocatoria";
+import type {
+    Convocatoria,
+} from "../types/convocatoria";
+
+import type {
+    Noticia,
+} from "../types/noticia";
 
 function HomePage()
 {
     const { perfil } = useAuth();
+
+    const navigate =
+        useNavigate();
 
     const [convocatoria, setConvocatoria] =
         useState<Convocatoria | null>(null);
@@ -41,6 +60,9 @@ function HomePage()
 
     const [miInscripcion, setMiInscripcion] =
         useState<MiInscripcion | null>(null);
+
+    const [ultimaNoticiaNoLeida, setUltimaNoticiaNoLeida] =
+        useState<Noticia | null>(null);
 
     const [loading, setLoading] =
         useState(true);
@@ -53,6 +75,12 @@ function HomePage()
 
     const [mensaje, setMensaje] =
         useState("");
+
+    /*
+     * =========================================================
+     * CARGAR INSCRIPCIONES
+     * =========================================================
+     */
 
     async function cargarInscripciones(
         convocatoriaId: number,
@@ -79,11 +107,59 @@ function HomePage()
         );
     }
 
+    /*
+     * =========================================================
+     * CARGAR ÚLTIMA NOTICIA NO LEÍDA
+     * =========================================================
+     */
+
+    async function cargarUltimaNoticiaNoLeida()
+    {
+        try
+        {
+            const noticia =
+                await obtenerUltimaNoticiaNoLeida();
+
+            setUltimaNoticiaNoLeida(
+                noticia,
+            );
+        }
+        catch (error)
+        {
+            /*
+             * Si falla la comprobación de noticias,
+             * no bloqueamos la Home ni mostramos
+             * un error general al usuario.
+             */
+
+            console.error(
+                "Error comprobando noticias no leídas:",
+                error,
+            );
+
+            setUltimaNoticiaNoLeida(null);
+        }
+    }
+
+    /*
+     * =========================================================
+     * CARGAR DATOS
+     * =========================================================
+     */
+
     async function cargarDatos()
     {
         try
         {
             setError("");
+
+            /*
+             * La noticia y la convocatoria son independientes,
+             * por lo que podemos consultarlas al entrar
+             * en la Home.
+             */
+
+            cargarUltimaNoticiaNoLeida();
 
             const convocatoriaActual =
                 await obtenerConvocatoriaActual();
@@ -126,6 +202,31 @@ function HomePage()
     {
         cargarDatos();
     }, []);
+
+    /*
+     * =========================================================
+     * LEER NOTICIA
+     * =========================================================
+     *
+     * Aquí NO la marcamos todavía como leída.
+     *
+     * Simplemente llevamos al usuario a /noticias.
+     * NoticiasPage será quien la marque como leída
+     * cuando la página se haya cargado correctamente.
+     */
+
+    function handleLeerNoticia()
+    {
+        navigate(
+            "/noticias",
+        );
+    }
+
+    /*
+     * =========================================================
+     * APUNTARSE
+     * =========================================================
+     */
 
     const handleApuntarse = async () =>
     {
@@ -182,6 +283,12 @@ function HomePage()
         }
     };
 
+    /*
+     * =========================================================
+     * RETIRARSE
+     * =========================================================
+     */
+
     const handleRetirarse = async () =>
     {
         if (!convocatoria)
@@ -236,6 +343,12 @@ function HomePage()
         }
     };
 
+    /*
+     * =========================================================
+     * LOADING
+     * =========================================================
+     */
+
     if (loading)
     {
         return (
@@ -247,8 +360,68 @@ function HomePage()
         );
     }
 
+    /*
+     * =========================================================
+     * HOME
+     * =========================================================
+     */
+
     return (
         <section className="home-page">
+
+            {/*
+             * =================================================
+             * BANNER NUEVA NOTICIA
+             * =================================================
+             */}
+
+            {ultimaNoticiaNoLeida && (
+                <section
+                    className="home-noticia-banner"
+                    onClick={
+                        handleLeerNoticia
+                    }
+                >
+                    <div className="home-noticia-icono">
+                        📰
+                    </div>
+
+                    <div className="home-noticia-info">
+                        <span className="home-noticia-etiqueta">
+                            NUEVA NOTICIA
+                        </span>
+
+                        <h2>
+                            {
+                                ultimaNoticiaNoLeida.titulo
+                            }
+                        </h2>
+
+                        <p>
+                            {
+                                ultimaNoticiaNoLeida.contenido
+                            }
+                        </p>
+
+                        <button
+                            type="button"
+                            className="home-noticia-leer"
+                            onClick={
+                                handleLeerNoticia
+                            }
+                        >
+                            Leer noticia →
+                        </button>
+                    </div>
+                </section>
+            )}
+
+            {/*
+             * =================================================
+             * MENSAJES
+             * =================================================
+             */}
+
             {error && (
                 <p
                     className="form-error"
@@ -264,6 +437,12 @@ function HomePage()
                 </p>
             )}
 
+            {/*
+             * =================================================
+             * SIN CONVOCATORIA
+             * =================================================
+             */}
+
             {!convocatoria && (
                 <section>
                     <h2>
@@ -278,31 +457,52 @@ function HomePage()
                 </section>
             )}
 
+            {/*
+             * =================================================
+             * CONVOCATORIA
+             * =================================================
+             */}
+
             {convocatoria && (
                 <>
                     <ConvocatoriaCard
-                        convocatoria={convocatoria}
-                        miInscripcion={miInscripcion}
-                        procesando={procesando}
-                        onApuntarse={handleApuntarse}
-                        onRetirarse={handleRetirarse}
+                        convocatoria={
+                            convocatoria
+                        }
+                        miInscripcion={
+                            miInscripcion
+                        }
+                        procesando={
+                            procesando
+                        }
+                        onApuntarse={
+                            handleApuntarse
+                        }
+                        onRetirarse={
+                            handleRetirarse
+                        }
                     />
 
                     <ListaInscripciones
-                        inscripciones={inscripciones}
+                        inscripciones={
+                            inscripciones
+                        }
                         nicknameUsuario={
                             perfil?.nickname
                         }
                     />
 
                     <EquiposPartido
-                        inscripciones={inscripciones}
+                        inscripciones={
+                            inscripciones
+                        }
                         nicknameUsuario={
                             perfil?.nickname
                         }
                     />
                 </>
             )}
+
         </section>
     );
 }

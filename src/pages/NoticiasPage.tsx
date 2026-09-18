@@ -15,6 +15,7 @@ import {
     editarNoticia,
     eliminarImagenNoticia,
     eliminarNoticia,
+    marcarNoticiaLeida,
     obtenerNoticias,
     registrarVisitaNoticias,
     subirImagenNoticia,
@@ -71,6 +72,12 @@ function NoticiasPage()
     const esAdmin =
         perfil?.rol === "admin";
 
+    /*
+     * =========================================================
+     * CARGAR NOTICIAS
+     * =========================================================
+     */
+
     async function cargarNoticias()
     {
         try
@@ -81,7 +88,69 @@ function NoticiasPage()
             const data =
                 await obtenerNoticias();
 
+            console.log(
+                "NOTICIAS CARGADAS:",
+                data,
+            );
+
             setNoticias(data);
+
+            /*
+             * =================================================
+             * MARCAR ÚLTIMA NOTICIA COMO LEÍDA
+             * =================================================
+             *
+             * obtenerNoticias() devuelve las noticias
+             * ordenadas de más reciente a más antigua.
+             *
+             * Por tanto, data[0] es la última publicada.
+             */
+
+            const ultimaNoticia =
+                data[0];
+
+            console.log(
+                "ÚLTIMA NOTICIA PARA MARCAR:",
+                ultimaNoticia,
+            );
+
+            if (ultimaNoticia)
+            {
+                try
+                {
+                    console.log(
+                        "MARCANDO COMO LEÍDA:",
+                        ultimaNoticia.id,
+                    );
+
+                    await marcarNoticiaLeida(
+                        ultimaNoticia.id,
+                    );
+
+                    console.log(
+                        "NOTICIA MARCADA COMO LEÍDA CORRECTAMENTE",
+                    );
+                }
+                catch (error)
+                {
+                    /*
+                     * Un fallo registrando la lectura
+                     * no debe impedir que el usuario
+                     * pueda seguir leyendo las noticias.
+                     */
+
+                    console.error(
+                        "ERROR MARCANDO NOTICIA COMO LEÍDA:",
+                        error,
+                    );
+                }
+            }
+            else
+            {
+                console.log(
+                    "NO HAY NINGUNA NOTICIA PARA MARCAR COMO LEÍDA",
+                );
+            }
         }
         catch (error)
         {
@@ -111,29 +180,36 @@ function NoticiasPage()
      * Si falla el registro de la visita,
      * NO impedimos que pueda seguir leyendo las noticias.
      */
+
     useEffect(() =>
-{
-    console.log(
-        "ENTRANDO EN NOTICIAS",
-    );
+    {
+        console.log(
+            "ENTRANDO EN NOTICIAS",
+        );
 
-    registrarVisitaNoticias()
-        .then(() =>
-        {
-            console.log(
-                "VISITA REGISTRADA CORRECTAMENTE",
-            );
-        })
-        .catch((error) =>
-        {
-            console.error(
-                "ERROR REGISTRANDO VISITA:",
-                error,
-            );
-        });
+        registrarVisitaNoticias()
+            .then(() =>
+            {
+                console.log(
+                    "VISITA REGISTRADA CORRECTAMENTE",
+                );
+            })
+            .catch((error) =>
+            {
+                console.error(
+                    "ERROR REGISTRANDO VISITA:",
+                    error,
+                );
+            });
 
-    cargarNoticias();
-}, []);
+        cargarNoticias();
+    }, []);
+
+    /*
+     * =========================================================
+     * LIBERAR PREVIEW AL DESMONTAR
+     * =========================================================
+     */
 
     useEffect(() =>
     {
@@ -150,6 +226,12 @@ function NoticiasPage()
             }
         };
     }, [previewImagen]);
+
+    /*
+     * =========================================================
+     * FORMATEAR FECHA
+     * =========================================================
+     */
 
     function formatearFecha(
         fecha: string,
@@ -168,6 +250,12 @@ function NoticiasPage()
         );
     }
 
+    /*
+     * =========================================================
+     * LIBERAR PREVIEW
+     * =========================================================
+     */
+
     function liberarPreview()
     {
         if (
@@ -180,6 +268,12 @@ function NoticiasPage()
             );
         }
     }
+
+    /*
+     * =========================================================
+     * SELECCIONAR IMAGEN
+     * =========================================================
+     */
 
     function seleccionarImagen(
         event: ChangeEvent<HTMLInputElement>,
@@ -228,6 +322,12 @@ function NoticiasPage()
         setQuitarImagenActual(false);
     }
 
+    /*
+     * =========================================================
+     * LIMPIAR FORMULARIO
+     * =========================================================
+     */
+
     function limpiarFormulario()
     {
         liberarPreview();
@@ -240,6 +340,12 @@ function NoticiasPage()
         setNoticiaEditando(null);
         setMostrarFormulario(false);
     }
+
+    /*
+     * =========================================================
+     * ABRIR NUEVA NOTICIA
+     * =========================================================
+     */
 
     function abrirNuevaNoticia()
     {
@@ -258,6 +364,12 @@ function NoticiasPage()
             behavior: "smooth",
         });
     }
+
+    /*
+     * =========================================================
+     * ABRIR EDICIÓN
+     * =========================================================
+     */
 
     function abrirEdicion(
         noticia: Noticia,
@@ -279,6 +391,12 @@ function NoticiasPage()
         });
     }
 
+    /*
+     * =========================================================
+     * QUITAR FOTO
+     * =========================================================
+     */
+
     function quitarFoto()
     {
         liberarPreview();
@@ -287,6 +405,12 @@ function NoticiasPage()
         setPreviewImagen(null);
         setQuitarImagenActual(true);
     }
+
+    /*
+     * =========================================================
+     * GUARDAR NOTICIA
+     * =========================================================
+     */
 
     async function guardarNoticia(
         event: FormEvent<HTMLFormElement>,
@@ -328,6 +452,7 @@ function NoticiasPage()
              * CREAR NOTICIA
              * =================================================
              */
+
             if (!noticiaEditando)
             {
                 let imagenUrl: string | null =
@@ -353,6 +478,7 @@ function NoticiasPage()
              * EDITAR NOTICIA
              * =================================================
              */
+
             else
             {
                 const imagenAnterior =
@@ -365,6 +491,7 @@ function NoticiasPage()
                  * El administrador ha elegido
                  * una foto nueva.
                  */
+
                 if (imagen)
                 {
                     imagenUrlFinal =
@@ -372,10 +499,12 @@ function NoticiasPage()
                             imagen,
                         );
                 }
+
                 /*
                  * El administrador quiere dejar
                  * la noticia sin fotografía.
                  */
+
                 else if (quitarImagenActual)
                 {
                     imagenUrlFinal =
@@ -394,6 +523,7 @@ function NoticiasPage()
                  * después de haber actualizado correctamente
                  * la noticia.
                  */
+
                 const imagenHaCambiado =
                     imagenAnterior &&
                     imagenAnterior !== imagenUrlFinal;
@@ -439,6 +569,12 @@ function NoticiasPage()
         }
     }
 
+    /*
+     * =========================================================
+     * ELIMINAR NOTICIA
+     * =========================================================
+     */
+
     async function confirmarEliminar(
         noticia: Noticia,
     )
@@ -469,6 +605,7 @@ function NoticiasPage()
              * Podemos quitarla directamente de pantalla
              * sin volver a consultar toda la tabla.
              */
+
             setNoticias(
                 (actuales) =>
                     actuales.filter(
@@ -501,6 +638,12 @@ function NoticiasPage()
             setEliminandoId(null);
         }
     }
+
+    /*
+     * =========================================================
+     * PÁGINA
+     * =========================================================
+     */
 
     return (
         <main className="noticias-page">
